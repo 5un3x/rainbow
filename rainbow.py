@@ -23,7 +23,7 @@ def main():
 
 def handle_args(args):
 
-    input_file = ['adam'] if args.test else open(args.input, 'r')
+    input_file = open(args.input, 'r')
     # set_char_length(args)
 
     for line in input_file:
@@ -75,15 +75,15 @@ def parse_args():
     #                     metavar='<number>',
     #                     help='max number of password characters')
 
-    required_group = parser.add_argument_group('required argument', 'create rainbow table or test rainbow.py')
+    required_group = parser.add_argument_group('required argument')
     mutex_group = required_group.add_mutually_exclusive_group(required=True)
     mutex_group.add_argument('-i', '--input',
                              dest='input',
                              metavar='FILE',
                              help='e.g: rainbow.py --input input_example.txt --all')
-    mutex_group.add_argument('-t', '--test',
-                             action='store_true',
-                             help='e.g: rainbow.py --test --all')
+    # mutex_group.add_argument('-t', '--test',
+    #                          action='store_true',
+    #                          help='e.g: rainbow.py --test --all')
 
     args = parser.parse_args(sys.argv[1:])
     return args
@@ -158,7 +158,7 @@ def birth_year(word, is_long):
 
 # print name to output file
 def print_to_file(word):
-    time.sleep(0.03)
+    #time.sleep(0.03)
     print word
     output_file.write(word + "\n")
 
