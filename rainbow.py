@@ -11,16 +11,21 @@ import argparse
 import time
 
 output_file = open('rainbow.txt', 'w+')
+current_word = ''
 
+# run mode flags
 run_as_test = False
 run_in_verbose_mode = False
 
+# filtering
 min_chars = 0
-max_chars = 12
+max_chars = 20
 
+# statistics
 number_of_rows_in_file = 0
 number_of_printed_words = 0
 
+# start
 def main():
     handle_args(parse_args())
 
@@ -52,6 +57,8 @@ def handle_args(args):
         global number_of_rows_in_file
         number_of_rows_in_file += 1
         word = line.rstrip()
+        global current_word
+        current_word = word
         if args.all:
             all_options(word)
         if args.common:
@@ -83,12 +90,12 @@ def parse_args():
                         dest='min',
                         default=0,
                         metavar='<number>',
-                        help='min number of password characters')
+                        help='min number of characters')
     parser.add_argument('--max',
                         dest='max',
                         default=0,
                         metavar='<number>',
-                        help='max number of password characters')
+                        help='max number of characters')
 
     required_group = parser.add_argument_group('required argument')
     mutex_group = required_group.add_mutually_exclusive_group(required=True)
@@ -127,18 +134,36 @@ def common(word):
 # --keyboard
 def keyboard(word):
     for w in [word, word.title(), word.upper()]:
-        print_to_file(w + '!')
-        print_to_file(w + '!"')
-        print_to_file(w + '!"#')
-        print_to_file(w + '!"#€')
-        print_to_file(w + '!"#€%')
-        print_to_file(w + '!"#€%&')
-        print_to_file(w + '!"#€%&/')
-        print_to_file(w + '!"#€%&/(')
-        print_to_file(w + '!"#€%&/()')
-        print_to_file(w + '!"#€%&/()=')
-        print_to_file(w + '!"#€%&/()=?')
-        print_to_file(w + '!"#€%&/()=?')
+        for c in ['§','!','"','#','%','&','/','(',')','=','?','','*','^',';',':','_',',','.','-','¨','<','>']:
+            res = ''
+            for x in range(0, 10):
+                res += c
+                print_to_file(w + res)
+
+    print_to_file(w + '!')
+    print_to_file(w + '!"')
+    print_to_file(w + '!"#')
+    print_to_file(w + '!"#€')
+    print_to_file(w + '!"#€%')
+    print_to_file(w + '!"#€%&')
+    print_to_file(w + '!"#€%&/')
+    print_to_file(w + '!"#€%&/(')
+    print_to_file(w + '!"#€%&/()')
+    print_to_file(w + '!"#€%&/()=')
+    print_to_file(w + '!"#€%&/()=?')
+    print_to_file(w + '!"#€%&/()=?')
+    print_to_file(w + '`')
+    print_to_file(w + '`?')
+    print_to_file(w + '`?=')
+    print_to_file(w + '`?=)')
+    print_to_file(w + '`?=)(')
+    print_to_file(w + '`?=)(/')
+    print_to_file(w + '`?=)(/&')
+    print_to_file(w + '`?=)(/&%')
+    print_to_file(w + '`?=)(/&%€')
+    print_to_file(w + '`?=)(/&%€#')
+    print_to_file(w + '`?=)(/&%€#"')
+    print_to_file(w + '`?=)(/&%€#"!')
 
 # --rep-numbers
 def repeating_numbers(word):
@@ -193,6 +218,7 @@ def is_word_in_range(word):
     global max_chars
     return len(word) >= min_chars and len(word) <= max_chars
 
+# print statistics in the end of generation
 def print_statistics():
     global number_of_rows_in_file
     global number_of_printed_words
@@ -203,6 +229,12 @@ def print_statistics():
     print ' Output list number of words:    '+str(number_of_printed_words)
     print ' Combinations per word:          '+str(number_of_printed_words / number_of_rows_in_file)
     print ''
+
+# def remove_duplicates(list, word):
+#     if word in list:
+#         list.remove(word)
+#         print 'removed duplicate: '+word
+
 
 if __name__ == "__main__":
     main()
