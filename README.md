@@ -43,5 +43,7 @@ Rainbow is a simple tool for generating rainbow tables based on an input word li
 
 
 ###Change log
+######2015-06-04 - Added statistics at the end of each generation
+######2015-06-04 - Added more keyboard combinations
 ######2015-06-04 - Version 1.0
    
