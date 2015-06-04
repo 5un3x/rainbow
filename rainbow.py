@@ -1,57 +1,60 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# Implementera test
-# Fixa min och max
-# Catcha fel input filename fel
+# Rainbow is a simple tool for generating rainbow tables
+# based on an input word list. It simply adding numbers and characters to the end of each word.
+#
+# Created by: 5un3x, 2015
 
 import sys
 import argparse
 import time
 
-verbose_mode = False
 run_as_test = False
-output_file = open('rainbow.txt', 'w+')
-# min_chars = 0
-# max_chars = 12
-
+output_file = open('rainbow_table.txt', 'w+')
+min_chars = 0
+max_chars = 12
 
 def main():
-    args = parse_args()
-    handle_args(args)
+    handle_args(parse_args())
 
+# set word min and max length
+def set_length_filter(args):
+    if args.min != 0:
+        global min_chars
+        min_chars = int(args.min)
+    if args.max != 0:
+        global max_chars
+        max_chars = int(args.max)
 
+# add options to word list generation
 def handle_args(args):
+    input_file = []
+    if args.input:
+        input_file = open(args.input, 'r')
+    else:
+        input_file = [args.test]
+        global run_as_test
+        run_as_test = True
 
-    input_file = open(args.input, 'r')
-    # set_char_length(args)
+    set_length_filter(args)
 
     for line in input_file:
         word = line.rstrip()
         if args.all:
-            print '--all'
             all_options(word)
         if args.common:
-            print '--common'
             common(word)
         if args.keyboard:
-            print '--keyboard'
             keyboard(word)
         if args.esc_numbers:
-            print '--esc-numbers'
             escalating_numbers(word)
         if args.rep_numbers:
-            print '--rep-numbers'
             repeating_numbers(word)
         if args.short_birth:
-            print '--short-birth'
             birth_year(word, False)
         if args.long_birth:
-            print '--long-birth'
             birth_year(word, True)
-        # if args.verbose:
-        #     is_verbose_mode = True
-
 
 def parse_args():
     parser = argparse.ArgumentParser('rainbow.py')
@@ -62,31 +65,29 @@ def parse_args():
     parser.add_argument('-r', '--rep-numbers', help='repeating numbers, word1111', action='store_true', default=False)
     parser.add_argument('-s', '--short-birth', help='short birth year, word86', action='store_true', default=False)
     parser.add_argument('-l', '--long-birth', help='long birth year, word1986', action='store_true', default=False)
-    # parser.add_argument('-v', '--verbose', help='run in verbose mode', action='store_true', default=False)
-
-    # parser.add_argument('--min',
-    #                     dest='min',
-    #                     default=int(0),
-    #                     metavar='<number>',
-    #                     help='min number of password characters')
-    # parser.add_argument('--max',
-    #                     dest='max',
-    #                     default=int(0),
-    #                     metavar='<number>',
-    #                     help='max number of password characters')
+    parser.add_argument('--min',
+                        dest='min',
+                        default=0,
+                        metavar='<number>',
+                        help='min number of password characters')
+    parser.add_argument('--max',
+                        dest='max',
+                        default=0,
+                        metavar='<number>',
+                        help='max number of password characters')
 
     required_group = parser.add_argument_group('required argument')
     mutex_group = required_group.add_mutually_exclusive_group(required=True)
     mutex_group.add_argument('-i', '--input',
                              dest='input',
                              metavar='FILE',
-                             help='e.g: rainbow.py --input input_example.txt --all')
-    # mutex_group.add_argument('-t', '--test',
-    #                          action='store_true',
-    #                          help='e.g: rainbow.py --test --all')
+                             help='e.g: rainbow.py -i input_example.txt -a')
+    mutex_group.add_argument('-t', '--test',
+                             metavar='WORD',
+                             dest='test',
+                             help='e.g: rainbow.py -t adam --all')
 
-    args = parser.parse_args(sys.argv[1:])
-    return args
+    return parser.parse_args(sys.argv[1:])
 
 
 # --all
@@ -109,7 +110,7 @@ def common(word):
     print_to_file(word + word.title())
     print_to_file(word.title() + word.title())
 
-
+# --keyboard
 def keyboard(word):
     for w in [word, word.title(), word.upper()]:
         print_to_file(w + '!')
@@ -124,7 +125,6 @@ def keyboard(word):
         print_to_file(w + '!"#€%&/()=')
         print_to_file(w + '!"#€%&/()=?')
         print_to_file(w + '!"#€%&/()=?')
-
 
 # --rep-numbers
 def repeating_numbers(word):
@@ -158,9 +158,20 @@ def birth_year(word, is_long):
 
 # print name to output file
 def print_to_file(word):
-    #time.sleep(0.03)
-    print word
-    output_file.write(word + "\n")
+    if not is_word_in_range(word):
+        return
+    if run_as_test:
+        time.sleep(0.02)
+        print word
+    else:
+        print word
+        output_file.write(word + "\n")
+
+# validate word length
+def is_word_in_range(word):
+    global min_chars
+    global max_chars
+    return len(word) >= min_chars and len(word) <= max_chars
 
 if __name__ == "__main__":
     main()
