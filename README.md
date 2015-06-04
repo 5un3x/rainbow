@@ -1,6 +1,6 @@
 #Rainbow
 
-	A rainbow table generating tool
+	A rainbow table generating tool version 0.1
 
 
 #Make script executable
