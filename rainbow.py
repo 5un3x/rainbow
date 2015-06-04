@@ -10,10 +10,16 @@ import sys
 import argparse
 import time
 
+output_file = open('rainbow.txt', 'w+')
+
 run_as_test = False
-output_file = open('rainbow_table.txt', 'w+')
+run_in_verbose_mode = False
+
 min_chars = 0
 max_chars = 12
+
+number_of_rows_in_file = 0
+number_of_printed_words = 0
 
 def main():
     handle_args(parse_args())
@@ -29,6 +35,9 @@ def set_length_filter(args):
 
 # add options to word list generation
 def handle_args(args):
+
+    global run_in_verbose_mode
+    run_in_verbose_mode = args.verbose
     input_file = []
     if args.input:
         input_file = open(args.input, 'r')
@@ -40,6 +49,8 @@ def handle_args(args):
     set_length_filter(args)
 
     for line in input_file:
+        global number_of_rows_in_file
+        number_of_rows_in_file += 1
         word = line.rstrip()
         if args.all:
             all_options(word)
@@ -56,6 +67,8 @@ def handle_args(args):
         if args.long_birth:
             birth_year(word, True)
 
+    print_statistics()
+
 def parse_args():
     parser = argparse.ArgumentParser('rainbow.py')
     parser.add_argument('-a', '--all', help='use all options', action='store_true', default=False)
@@ -65,6 +78,7 @@ def parse_args():
     parser.add_argument('-r', '--rep-numbers', help='repeating numbers, word1111', action='store_true', default=False)
     parser.add_argument('-s', '--short-birth', help='short birth year, word86', action='store_true', default=False)
     parser.add_argument('-l', '--long-birth', help='long birth year, word1986', action='store_true', default=False)
+    parser.add_argument('-v', '--verbose', help='run in verbose mode', action='store_true', default=False)
     parser.add_argument('--min',
                         dest='min',
                         default=0,
@@ -80,10 +94,10 @@ def parse_args():
     mutex_group = required_group.add_mutually_exclusive_group(required=True)
     mutex_group.add_argument('-i', '--input',
                              dest='input',
-                             metavar='FILE',
+                             metavar='<file>',
                              help='e.g: rainbow.py -i input_example.txt -a')
     mutex_group.add_argument('-t', '--test',
-                             metavar='WORD',
+                             metavar='<word>',
                              dest='test',
                              help='e.g: rainbow.py -t adam --all')
 
@@ -160,18 +174,35 @@ def birth_year(word, is_long):
 def print_to_file(word):
     if not is_word_in_range(word):
         return
+
+    global number_of_printed_words
+    number_of_printed_words += 1
+
     if run_as_test:
         time.sleep(0.02)
         print word
     else:
-        print word
         output_file.write(word + "\n")
+        global run_in_verbose_mode
+        if run_in_verbose_mode:
+            print word
 
 # validate word length
 def is_word_in_range(word):
     global min_chars
     global max_chars
     return len(word) >= min_chars and len(word) <= max_chars
+
+def print_statistics():
+    global number_of_rows_in_file
+    global number_of_printed_words
+    print ''
+    if not run_as_test:
+        print '*** rainbow.txt has been created! ***'
+    print ' Input list number of words:     '+str(number_of_rows_in_file)
+    print ' Output list number of words:    '+str(number_of_printed_words)
+    print ' Combinations per word:          '+str(number_of_printed_words / number_of_rows_in_file)
+    print ''
 
 if __name__ == "__main__":
     main()
