@@ -1,5 +1,13 @@
-# rainbow
-Rainbow table generator tool
+#Make script executable
+
+	$ chmod +x rainbow.py
+
+
+#Example (run with all options)
+
+    ./rainbow.py -i <input_text_file> --all
+    
+#Rainbow Usage
 
     usage: rainbow.py [-h] [-a] [-c] [-k] [-e] [-r] [-s] [-l] -i FILE
 
@@ -16,3 +24,7 @@ Rainbow table generator tool
     required argument:
       -i FILE, --input FILE
                             e.g: rainbow.py --input input_example.txt --all
+
+#Changelog
+    No changes
+   
