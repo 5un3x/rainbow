@@ -4,21 +4,22 @@
 Rainbow is a simple tool for generating rainbow tables based on an input word list. It simply adding numbers and characters to the end of each word. View usage below for options description.
 
 ###Example
-######View /example folder for an output example
+######View /example/output_example.txt for an output example by this command:
+    $ ./rainbow.py -i example/input_example.txt --all --min 8 --max 12
 
 ###Make script executable
 
-	$ chmod +x rainbow.py
+    $ chmod +x rainbow.py
 
 ###Usage
 ######Creating a output txt file based on <input_text_file> with all options activated
-    ./rainbow.py -i <input_text_file> --all
+    $ ./rainbow.py -i <input_text_file> --all
     
 ###Test
 ######Printing the result of all options activated based on the word 'richard' in the terminal
-    ./rainbow.py -t richard --all
+    $ ./rainbow.py -t richard --all
     
-###Rainbow Usage
+###Rainbow usage
 
     usage: rainbow.py [-h] [-a] [-c] [-k] [-e] [-r] [-s] [-l] [--min <number>]
                   [--max <number>] (-i FILE | -t WORD)
