@@ -1,3 +1,8 @@
+#Rainbow
+
+	A rainbow table generating tool
+
+
 #Make script executable
 
 	$ chmod +x rainbow.py
