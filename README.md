@@ -29,13 +29,14 @@ Rainbow is a simple tool for generating rainbow tables based on an input word li
       -r, --rep-numbers     repeating numbers, word1111
       -s, --short-birth     short birth year, word86
       -l, --long-birth      long birth year, word1986
-      --min <number>        min number of password characters
-      --max <number>        max number of password characters
+      --min <number>        limit min number in password
+      --max <number>        limit max number in password
 
     required argument:
-      -i FILE, --input FILE
+      -i <file>, --input <file>
                             e.g: rainbow.py -i input_example.txt -a
-      -t WORD, --test WORD  e.g: rainbow.py -t adam --all
+      -t <word>, --test <word>
+                            e.g: rainbow.py -t adam --all
 
 
 ###Change log
