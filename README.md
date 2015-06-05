@@ -5,19 +5,15 @@ Rainbow is a simple tool for generating rainbow tables based on an input word li
 
 ###Example
 ######View /example/output_example.txt for an output example by this command:
-    $ ./rainbow.py -i example/input_example.txt --all --min 8 --max 12
-
-###Make script executable
-
-    $ python ./rainbow.py
+    $ python ./rainbow.py -i example/input_example.txt --all --min 8 --max 12
 
 ###Usage
 ######Creating a output txt file based on <input_text_file> with all options activated
-    $ ./rainbow.py -i <input_text_file> --all
+    $ python ./rainbow.py -i <input_text_file> --all
     
 ###Test
 ######Printing the result of all options activated based on the word 'richard' in the terminal
-    $ ./rainbow.py -t richard --all
+    $ python ./rainbow.py -t richard --all
     
 ###Rainbow usage
 
