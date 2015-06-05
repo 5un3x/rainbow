@@ -9,7 +9,7 @@ Rainbow is a simple tool for generating rainbow tables based on an input word li
 
 ###Make script executable
 
-    $ chmod +x rainbow.py
+    $ python rainbow.py
 
 ###Usage
 ######Creating a output txt file based on <input_text_file> with all options activated
