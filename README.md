@@ -24,11 +24,13 @@ Rainbow is a simple tool for generating rainbow tables based on an input word li
       -h, --help            show this help message and exit
       -a, --all             use all options
       -c, --common          common combinations, wordWord
+      -1, --leet            1337 combinations, w0rd
       -k, --keyboard        keyboard combinations, word!@#€
       -e, --esc-numbers     escalating numbers, word1234
       -r, --rep-numbers     repeating numbers, word1111
       -s, --short-birth     short birth year, word86
       -l, --long-birth      long birth year, word1986
+      -v, --verbose         run in verbose mode
       --min <number>        limit min number in password
       --max <number>        limit max number in password
 
