@@ -18,7 +18,7 @@ run_in_verbose_mode = False
 
 # filtering
 min_chars = 0
-max_chars = 20
+max_chars = 12
 
 # statistics
 number_of_rows_in_file = 0
@@ -115,6 +115,7 @@ def parse_args():
 # --all
 def all_options(word):
     common(word)
+    leet(word)
     keyboard(word)
     repeating_numbers(word)
     escalating_numbers(word)
@@ -134,57 +135,74 @@ def common(word):
 
 # --leet
 def leet(word):
+    if len(word) < min_chars:
+        word += word
     if "o" in word:
-        print_to_file(word.replace('o','0'))  
+        print_to_file(word.replace('o','0'))
+        print_to_file(word.replace('o','0').title())
+        print_to_file(word.replace('o','0').upper())      
     if "i" in word: 
-        print_to_file(word.replace('i','1')) 
+        print_to_file(word.replace('i','1'))
+        print_to_file(word.replace('i','1').title())
+        print_to_file(word.replace('i','1').upper()) 
     if "e" in word:
-        print_to_file(word.replace('e','3')) 
+        print_to_file(word.replace('e','3'))
+        print_to_file(word.replace('e','3').title())
+        print_to_file(word.replace('e','3').upper()) 
     if "t" in word:
         print_to_file(word.replace('t','7')) 
+        print_to_file(word.replace('t','7').title()) 
+        print_to_file(word.replace('t','7').upper()) 
     if "l" in word:
         print_to_file(word.replace('l','1'))
+        print_to_file(word.replace('l','1').title())
+        print_to_file(word.replace('l','1').upper())
     if "s" in word:
         print_to_file(word.replace('s','5'))
+        print_to_file(word.replace('s','5').title())
+        print_to_file(word.replace('s','5').upper())
     if "a" in word:
         print_to_file(word.replace('a','4'))
+        print_to_file(word.replace('a','4').title())
+        print_to_file(word.replace('a','4').upper())
     if "o" or "i" or "l" or "s" or "a" or "e" or "t" in word:
         print_to_file(word.replace('o','0').replace('i','1').replace('l','1').replace('s','5').replace('a','4').replace('e','3').replace('t','7'))
-
+        print_to_file(word.replace('o','0').replace('i','1').replace('l','1').replace('s','5').replace('a','4').replace('e','3').replace('t','7').title())
+        print_to_file(word.replace('o','0').replace('i','1').replace('l','1').replace('s','5').replace('a','4').replace('e','3').replace('t','7').upper())
 
 # --keyboard
 def keyboard(word):
     for w in [word, word.title(), word.upper()]:
-        for c in ['§','!','"','#','%','&','/','(',')','=','?','','*','^',';',':','_',',','.','-','¨','<','>']:
+        for c in ['§','!','"','#','%','&','/','(',')','=','?','*','^',';',':','_',',','.','-','¨','<','>']:
             res = ''
-            for x in range(0, 10):
+            for x in range(0, max_chars - len(word) + 1):
                 res += c
                 print_to_file(w + res)
 
-    print_to_file(w + '!')
-    print_to_file(w + '!"')
-    print_to_file(w + '!"#')
-    print_to_file(w + '!"#€')
-    print_to_file(w + '!"#€%')
-    print_to_file(w + '!"#€%&')
-    print_to_file(w + '!"#€%&/')
-    print_to_file(w + '!"#€%&/(')
-    print_to_file(w + '!"#€%&/()')
-    print_to_file(w + '!"#€%&/()=')
-    print_to_file(w + '!"#€%&/()=?')
-    print_to_file(w + '!"#€%&/()=?')
-    print_to_file(w + '`')
-    print_to_file(w + '`?')
-    print_to_file(w + '`?=')
-    print_to_file(w + '`?=)')
-    print_to_file(w + '`?=)(')
-    print_to_file(w + '`?=)(/')
-    print_to_file(w + '`?=)(/&')
-    print_to_file(w + '`?=)(/&%')
-    print_to_file(w + '`?=)(/&%€')
-    print_to_file(w + '`?=)(/&%€#')
-    print_to_file(w + '`?=)(/&%€#"')
-    print_to_file(w + '`?=)(/&%€#"!')
+        print_to_file(w + '!')
+        print_to_file(w + '!"')
+        print_to_file(w + '!"#')
+        print_to_file(w + '!"#€')
+        print_to_file(w + '!"#€%')
+        print_to_file(w + '!"#€%&')
+        print_to_file(w + '!"#€%&/')
+        print_to_file(w + '!"#€%&/(')
+        print_to_file(w + '!"#€%&/()')
+        print_to_file(w + '!"#€%&/()=')
+        print_to_file(w + '!"#€%&/()=?')
+        print_to_file(w + '!"#€%&/()=?')
+        # print_to_file(w + '`')
+        # print_to_file(w + '`?')
+        # print_to_file(w + '`?=')
+        # print_to_file(w + '`?=)')
+        # print_to_file(w + '`?=)(')
+        # print_to_file(w + '`?=)(/')
+        # print_to_file(w + '`?=)(/&')
+        # print_to_file(w + '`?=)(/&%')
+        # print_to_file(w + '`?=)(/&%€')
+        # print_to_file(w + '`?=)(/&%€#')
+        # print_to_file(w + '`?=)(/&%€#"')
+        # print_to_file(w + '`?=)(/&%€#"!')
 
 # --rep-numbers
 def repeating_numbers(word):
@@ -192,7 +210,7 @@ def repeating_numbers(word):
         for i in range(0, 10):
             number = i
             res = ''
-            for x in range(0, 10):
+            for x in range(0, max_chars - len(word) +1):
                 res += str(number)
                 print_to_file(w + res)
 
@@ -201,7 +219,7 @@ def repeating_numbers(word):
 def escalating_numbers(word):
     for w in [word, word.title(), word.upper()]:
         numbers = ''
-        for x in range(1, 10):
+        for x in range(1, max_chars - len(word) + 1):
             numbers += str(x)
             print_to_file(w + numbers)
 
@@ -209,7 +227,7 @@ def escalating_numbers(word):
 # --short-birth, --long-birth
 def birth_year(word, is_long):
     for w in [word, word.title(), word.upper()]:
-        for x in range(1950, 2016):
+        for x in range(1945, 2016):
             if is_long:
                 print_to_file(w + str(x))
             else:
