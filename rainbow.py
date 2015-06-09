@@ -11,7 +11,6 @@ import argparse
 import time
 
 output_file = open('rainbow.txt', 'w+')
-current_word = ''
 
 # run mode flags
 run_as_test = False
@@ -56,9 +55,8 @@ def handle_args(args):
     for line in input_file:
         global number_of_rows_in_file
         number_of_rows_in_file += 1
-        word = line.rstrip()
-        global current_word
-        current_word = word
+        word = line.rstrip().lower()
+
         if args.all:
             all_options(word)
         if args.common:
@@ -73,6 +71,8 @@ def handle_args(args):
             birth_year(word, False)
         if args.long_birth:
             birth_year(word, True)
+        if args.leet:
+            leet(word)
 
     print_statistics()
 
@@ -80,6 +80,7 @@ def parse_args():
     parser = argparse.ArgumentParser('rainbow.py')
     parser.add_argument('-a', '--all', help='use all options', action='store_true', default=False)
     parser.add_argument('-c', '--common', help='common combinations, wordWord', action='store_true', default=False)
+    parser.add_argument('-1', '--leet', help='1337 combinations, w0rd', action='store_true', default=False)
     parser.add_argument('-k', '--keyboard', help='keyboard combinations, word!@#€', action='store_true', default=False)
     parser.add_argument('-e', '--esc-numbers', help='escalating numbers, word1234', action='store_true', default=False)
     parser.add_argument('-r', '--rep-numbers', help='repeating numbers, word1111', action='store_true', default=False)
@@ -130,6 +131,26 @@ def common(word):
     print_to_file(word.upper() + word.upper())
     print_to_file(word + word.title())
     print_to_file(word.title() + word.title())
+
+# --leet
+def leet(word):
+    if "o" in word:
+        print_to_file(word.replace('o','0'))  
+    if "i" in word: 
+        print_to_file(word.replace('i','1')) 
+    if "e" in word:
+        print_to_file(word.replace('e','3')) 
+    if "t" in word:
+        print_to_file(word.replace('t','7')) 
+    if "l" in word:
+        print_to_file(word.replace('l','1'))
+    if "s" in word:
+        print_to_file(word.replace('s','5'))
+    if "a" in word:
+        print_to_file(word.replace('a','4'))
+    if "o" or "i" or "l" or "s" or "a" or "e" or "t" in word:
+        print_to_file(word.replace('o','0').replace('i','1').replace('l','1').replace('s','5').replace('a','4').replace('e','3').replace('t','7'))
+
 
 # --keyboard
 def keyboard(word):
@@ -229,11 +250,6 @@ def print_statistics():
     print ' Output list number of words:    '+str(number_of_printed_words)
     print ' Combinations per word:          '+str(number_of_printed_words / number_of_rows_in_file)
     print ''
-
-# def remove_duplicates(list, word):
-#     if word in list:
-#         list.remove(word)
-#         print 'removed duplicate: '+word
 
 
 if __name__ == "__main__":
